@@ -1,10 +1,12 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #212020;
 }
 
 .countdown {
-    margin-top: 50px;
+    margin-top: 350px;
+    color: #f8f5f5f2;
 }
 
 #timer {

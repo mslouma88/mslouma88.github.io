@@ -1,25 +1,47 @@
-// Date actuelle
-const now = new Date();
+// Form Submission Handling
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Merci pour votre message. Je vous répondrai bientôt.');
+});
 
-// Date dans un mois
-const oneMonthLater = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate());
+// Scroll to Top Button
+let scrollTopBtn = document.getElementById('scrollTopBtn');
 
-function updateCountdown() {
-    const difference = oneMonthLater - new Date();
+window.onscroll = function() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        scrollTopBtn.style.display = "block";
+    } else {
+        scrollTopBtn.style.display = "none";
+    }
+};
 
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+});
 
-    document.getElementById('days').innerText = days;
-    document.getElementById('hours').innerText = hours;
-    document.getElementById('minutes').innerText = minutes;
-    document.getElementById('seconds').innerText = seconds;
+// Display current date and time
+function updateClock() {
+    const now = new Date();
+    const clockDiv = document.getElementById('clock');
+    clockDiv.innerHTML = now.toLocaleDateString() + " " + now.toLocaleTimeString();
 }
 
-// Actualisation du compte à rebours chaque seconde
-setInterval(updateCountdown, 1000);
+setInterval(updateClock, 1000);
 
-// Actualisation du compte à rebours au chargement de la page
-updateCountdown();
+
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
+
+    emailjs.sendForm(process.env.REACT_APP_EMAILJS_SERVICE_ID, process.env.REACT_APP_EMAILJS_TEMPLATE_ID, this, process.env.REACT_APP_EMAILJS_USER_ID)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            document.getElementById('message-success').style.display = 'block';
+        }, function(error) {
+            console.log('FAILED...', error);
+            document.getElementById('message-error').style.display = 'block';
+        });
+
+    // Optionnel : réinitialiser le formulaire après envoi
+    this.reset();
+});

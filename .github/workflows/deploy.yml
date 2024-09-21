@@ -42,7 +42,7 @@ jobs:
 
     # Déploiement vers GitHub Pages
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-main@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public  # Le répertoire où se trouvent tes fichiers à déployer

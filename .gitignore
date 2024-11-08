@@ -1,4 +1,6 @@
 .env/
 EN/
 style1.css
+style.css
 .github/workflows/*
+indexen.html
